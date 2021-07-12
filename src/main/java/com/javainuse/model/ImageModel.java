@@ -37,7 +37,6 @@ public class ImageModel {
 	private String venue;
 
 
-	@Lob
 	@Column(name = "image", length = 1000)
 	private byte[] picByte;
 
