@@ -38,7 +38,7 @@ public class ImageModel {
 	@Column(name = "venue")
 	private String venue;
 
-	
+
 	@Column(name = "image", length = 1000)
 	private byte[] picByte;
 
