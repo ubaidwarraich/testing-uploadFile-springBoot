@@ -45,7 +45,7 @@ public class ImageUploadController {
 	@GetMapping(path = { "/get/{imageName}" })
 	public ImageModel getImage(@PathVariable("imageName") String imageName) throws IOException {
 
-		final Optional<ImageModel> retrievedImage = imageRepository.findByName(imageName);
+		final Optional<ImageModel> retrievedImage = imageRepository.findTopByName(imageName);
 		ImageModel img = new ImageModel(retrievedImage.get().getName(), retrievedImage.get().getType(),
 				decompressZLib(retrievedImage.get().getPicByte()));
 		return img;
