@@ -39,7 +39,7 @@ public class EventController {
 	@GetMapping(path = { "/get/{imageName}" })
 	public Event getImage(@PathVariable("imageName") String imageName) throws IOException {
 
-		final Optional<Event> retrievedImage = imageRepository.findTopByName(imageName);
+		final Optional<Event> retrievedImage = imageRepository.findTopByTitle(imageName);
 		Event img = new Event(retrievedImage.get().getVenue(),retrievedImage.get().getDate(),retrievedImage.get().getTitle(), retrievedImage.get().getDescription(),
 				decompressZLib(retrievedImage.get().getImage()));
 		return img;
