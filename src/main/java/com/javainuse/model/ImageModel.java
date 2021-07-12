@@ -1,5 +1,7 @@
 package com.javainuse.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -37,6 +39,7 @@ public class ImageModel {
 	private String venue;
 
 
+	@Type(type="org.hibernate.type.BinaryType")
 	@Column(name = "image", length = 1000)
 	private byte[] picByte;
 
