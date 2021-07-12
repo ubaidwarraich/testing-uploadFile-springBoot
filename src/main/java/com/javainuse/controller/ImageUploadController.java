@@ -24,7 +24,7 @@ import com.javainuse.db.ImageRepository;
 import com.javainuse.model.ImageModel;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4201")
+@CrossOrigin(origins = {"http://localhost:4201","http://localhost:4200"})
 @RequestMapping(path = "image")
 public class ImageUploadController {
 
