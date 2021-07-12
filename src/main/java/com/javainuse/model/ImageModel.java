@@ -38,7 +38,8 @@ public class ImageModel {
 	@Column(name = "venue")
 	private String venue;
 
-
+	@Lob
+	@Type(type="org.hibernate.type.PrimitiveByteArrayBlobType")
 	@Column(name = "image", length = 1000)
 	private byte[] picByte;
 
