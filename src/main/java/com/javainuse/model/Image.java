@@ -5,6 +5,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "image")
 public class Image {
+
+    public Image() {
+        super();
+    }
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
