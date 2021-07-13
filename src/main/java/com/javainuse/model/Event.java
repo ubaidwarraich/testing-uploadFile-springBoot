@@ -13,12 +13,11 @@ public class Event {
 		super();
 	}
 
-	public Event(String venue,Date date,String title, String description, byte[] image) {
+	public Event(String venue,Date date,String title, String description) {
 		this.title = title;
 		this.date=date;
 		this.venue=venue;
 		this.description = description;
-		this.image = image;
 	}
 
 	@Id
@@ -38,8 +37,6 @@ public class Event {
 	@Column(name = "venue")
 	private String venue;
 
-	@Column(name = "image", length = 1000)
-	private byte[] image;
 
 	public Long getId() {
 		return id;
@@ -79,13 +76,5 @@ public class Event {
 
 	public void setVenue(String venue) {
 		this.venue = venue;
-	}
-
-	public byte[] getImage() {
-		return image;
-	}
-
-	public void setImage(byte[] image) {
-		this.image = image;
 	}
 }
