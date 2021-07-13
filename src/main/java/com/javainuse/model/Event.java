@@ -13,8 +13,9 @@ public class Event {
 		super();
 	}
 
-	public Event(String venue,Date date,String title, String description) {
+	public Event(String venue,Date date,String title, Long imageId,String description) {
 		this.title = title;
+		this.imageId=imageId;
 		this.date=date;
 		this.venue=venue;
 		this.description = description;
@@ -29,7 +30,7 @@ public class Event {
 	private String title;
 
 	@Column(name = "imageId")
-	private String imageId;
+	private Long imageId;
 
 	@Column(name = "description")
 	private String description;
@@ -81,5 +82,13 @@ public class Event {
 
 	public void setVenue(String venue) {
 		this.venue = venue;
+	}
+
+	public Long getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(Long imageId) {
+		this.imageId = imageId;
 	}
 }
