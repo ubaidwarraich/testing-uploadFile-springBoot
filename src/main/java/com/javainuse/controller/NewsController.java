@@ -1,5 +1,13 @@
 package com.javainuse.controller;
 
+import com.javainuse.db.imageRepository;
+import com.javainuse.db.newsRepository;
+import com.javainuse.model.Image;
+import com.javainuse.model.News;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,64 +17,53 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-import com.javainuse.db.imageRepository;
-import com.javainuse.model.Event;
-import com.javainuse.model.Image;
-import com.javainuse.model.News;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.javainuse.db.eventRepository;
-
 @RestController
 @CrossOrigin(origins = {"http://localhost:4201", "http://localhost:4200"})
-@RequestMapping(path = "event")
-public class EventController {
-
+@RequestMapping(path = "news")
+public class NewsController {
     @Autowired
-    eventRepository eventRepository;
+    newsRepository newsRepository;
 
     @Autowired
     imageRepository imageRepository;
 
     @PostMapping()
-    public Event createEvent(@RequestBody Event event) {
-        return eventRepository.save(event);
+    public News createNews(@RequestBody News news) {
+        return newsRepository.save(news);
+    }
+
+    @GetMapping("/recent")
+    public List<News> getRecent(){
+        return newsRepository.findRecent();
     }
 
     @GetMapping("/all")
-    public List<Event> getAll() {
-        return eventRepository.findAll();
+    public List<News> getAll() {
+        return newsRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<Event> getById(@PathVariable("id") Long id) {
-        return eventRepository.findById(id);
+    public Optional<News> getById(@PathVariable("id") Long id) {
+        return newsRepository.findById(id);
     }
-    
+
     @PutMapping("/{id}")
-    public Event updateEvent(@PathVariable("id") Long id,@RequestBody Event event){
-        Optional<Event> event1=eventRepository.findById(id);
+    public News updateNews(@PathVariable("id") Long id,@RequestBody News event){
+        Optional<News> event1= newsRepository.findById(id);
         return event1.map(event2 -> {
             event2.setTitle(event.getTitle());
             event2.setDescription(event.getDescription());
             event2.setDate(event.getDate());
-            event2.setVenue(event.getVenue());
+            event2.setAuthor(event.getAuthor());
             event2.setImageId(event.getImageId());
-           return eventRepository.save(event2);
+            return newsRepository.save(event2);
         }).orElse(null);
     }
 
     @DeleteMapping("/{id}")
-    public Event DeleteEvent(@PathVariable("id") Long id){
-         eventRepository.deleteById(id);
-         return null;
-    }
-
-    @GetMapping("/recent")
-    public List<Event> getRecent(){
-        return eventRepository.findRecent();
+    public News DeleteEvent(@PathVariable("id") Long id){
+        newsRepository.deleteById(id);
+        return null;
     }
 
     @PostMapping("/upload")
@@ -92,9 +89,9 @@ public class EventController {
         for(Image image:images){
             Image img=new Image(decompressZLib(image.getImage()));
             img.setId(image.getId());
-           finalImages.add(img);
+            finalImages.add(img);
         }
-       return finalImages;
+        return finalImages;
     }
 
     // compress the image bytes before storing it in the database
@@ -136,4 +133,5 @@ public class EventController {
         }
         return outputStream.toByteArray();
     }
+
 }
