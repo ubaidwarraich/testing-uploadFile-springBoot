@@ -2,6 +2,7 @@ package com.javainuse.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
@@ -70,11 +71,24 @@ public class EventController {
         return imageRepository.save(img).getId();
     }
 
-    @GetMapping(path = {"/get/{id}"})
+    @GetMapping(path = {"/image/{id}"})
     public Image getImage(@PathVariable("id") Long id) throws IOException {
 
         Optional<Image> retrievedImage = imageRepository.findTopById(id);
         return retrievedImage.map(image -> new Image(decompressZLib(image.getImage()))).orElse(null);
+    }
+
+    @GetMapping(path = {"/image/all"})
+    public List<Image> getAllImages(){
+
+        List<Image> images=imageRepository.findAll();
+        List<Image> finalImages=new ArrayList<>();
+        for(Image image:images){
+            Image img=new Image(decompressZLib(image.getImage()));
+            img.setId(image.getId());
+           finalImages.add(img);
+        }
+       return finalImages;
     }
 
     // compress the image bytes before storing it in the database
