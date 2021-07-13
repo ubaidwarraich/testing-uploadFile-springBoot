@@ -8,6 +8,7 @@ import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 import com.javainuse.db.imageRepository;
+import com.javainuse.model.Event;
 import com.javainuse.model.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,11 @@ public class EventController {
     @Autowired
     imageRepository imageRepository;
 
+    @PostMapping()
+    public Event createEvent(@RequestBody Event event){
+        return eventRepository.save(event);
+    }
+
     @PostMapping("/upload")
     public Long uplaodImage(@RequestParam("imageFile") MultipartFile file) throws IOException {
 
@@ -38,7 +44,7 @@ public class EventController {
     public Image getImage(@PathVariable("id") Long id) throws IOException {
 
         Optional<Image> retrievedImage = imageRepository.findTopById(id);
-        return retrievedImage.map(image -> new Image( decompressZLib(image.getImage()))).orElse(null);
+        return retrievedImage.map(image -> new Image(decompressZLib(image.getImage()))).orElse(null);
     }
 
     // compress the image bytes before storing it in the database

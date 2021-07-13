@@ -28,6 +28,9 @@ public class Event {
 	@Column(name = "title")
 	private String title;
 
+	@Column(name = "imageId")
+	private String imageId;
+
 	@Column(name = "description")
 	private String description;
 
@@ -36,6 +39,8 @@ public class Event {
 
 	@Column(name = "venue")
 	private String venue;
+
+
 
 
 	public Long getId() {
