@@ -32,7 +32,7 @@ public class Event {
 	@Column(name = "imageId")
 	private Long imageId;
 
-	@Column(name = "description")
+	@Column(name = "description",length=5000)
 	private String description;
 
 	@Column(name = "date")
